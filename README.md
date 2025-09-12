@@ -129,7 +129,7 @@ care-connect/
 1. **Clone Repo**
 
 ```bash
-git clone https://github.com/<your-org>/care-connect.git
+git clone https://github.com/amegahed12/Care-Connect.git
 cd care-connect
 ```
 
