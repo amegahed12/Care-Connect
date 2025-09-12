@@ -60,39 +60,51 @@ The platform reduces the need for physical visits while helping healthcare provi
 
 ## 📂 Project Structure
 
-```
+```markdown
 care-connect/
 ├── public/ # Static files (favicon, index.html)
-└── src/
-├── assets/ # Images, icons, logos
+│
+└── src/ # Application source code
+├── assets/ # Images, icons, and logos
+│
 ├── components/ # Reusable UI components
 │ ├── Button.tsx
 │ ├── Navbar.tsx
 │ └── ...
-├── context/ # React context for auth, theme, etc.
+│
+├── context/ # React Context (e.g., Auth, Theme)
 │ └── AuthContext.tsx
-├── hooks/ # Custom hooks
+│
+├── hooks/ # Custom React hooks
 │ └── useAuth.ts
+│
 ├── pages/ # Page-level components
 │ ├── Patient/
 │ │ ├── PatientDashboard.tsx
 │ │ └── BookAppointment.tsx
+│ │
 │ ├── Doctor/
 │ │ └── DoctorDashboard.tsx
+│ │
 │ └── Admin/
 │ └── AdminDashboard.tsx
-├── services/ # API calls & mock data
+│
+├── services/ # API services and mock data
 │ └── api.ts
+│
 ├── styles/ # Global styles or Tailwind config
-├── utils/ # Helper functions
+│
+├── utils/ # Helper/utility functions
 │ └── formatDate.ts
-├── App.tsx # App entry point
-├── main.tsx # ReactDOM render
-└── vite-env.d.ts # TypeScript env types
-├── .eslintrc.js # ESLint config
-├── .prettierrc # Prettier config
-├── package.json
-└── README.md
+│
+├── App.tsx # Main App component
+├── main.tsx # React entry point
+└── vite-env.d.ts # TypeScript environment types
+│
+├── .eslintrc.js # ESLint configuration
+├── .prettierrc # Prettier configuration
+├── package.json # Project metadata and dependencies
+└── README.md # Project documentation
 ```
 
 ---
