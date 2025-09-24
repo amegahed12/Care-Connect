@@ -1,44 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AdminLayout from "./components/admin/AdminLayout";
+// import PlatformActivity from "./pages/Admin/PlatformActivity";
+import ManagePatients from "./pages/Admin/ManagePatients";
+// import ManageDoctors from "./pages/Admin/ManageDoctors";
+// import CredentialVerification from "./pages/Admin/CredentialVerification";
+// import ActivityLog from "./pages/Admin/ActivityLog";
+// import AdminSettings from "./pages/Admin/AdminSettings";
 
 function App() {
-
-  const [count, setCount] = useState(0)
-
-    function maipulateCount(inc: boolean) {
-    if (inc) 
-      setCount((count) => count + 1);
-    else if (count > 0)
-      setCount((count) => count - 1);
-  }
-
   return (
-    <>
-    <h3 className='text-3xl font-bold underline'>Admin Portal</h3>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Under Construction</h1>
-      <div className="card">
-        <button onClick={() => maipulateCount(true)}>
-          Increase
-        </button>
-        <button onClick={() => maipulateCount(false)}>
-          Decrease
-        </button>
-        <p>
-          Count is {count}
-        </p>
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          {/* <Route index element={<PlatformActivity />} /> */}
+          <Route path="patients" element={<ManagePatients />} />
+          {/* <Route path="doctors" element={<ManageDoctors />} />
+          <Route path="verify-doctors" element={<CredentialVerification />} />
+          <Route path="activity" element={<ActivityLog />} />
+          <Route path="settings" element={<AdminSettings />} /> */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
