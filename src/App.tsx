@@ -16,7 +16,6 @@ function App() {
 
   return (
     <>
-    <h3 className='text-3xl font-bold underline'>Admin Portal</h3>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
