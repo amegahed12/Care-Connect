@@ -5,7 +5,7 @@
  * State: It needs to know which link is currently active. NavLink handles this automatically.
  */
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -14,23 +14,23 @@ import {
   Activity,
   Settings,
   CircleUserRound,
-} from 'lucide-react';
+} from "lucide-react";
 
 // An array to hold navigation links for easy mapping
 const navLinks = [
-  { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
-  { icon: Users, label: 'Patients', href: '/admin/patients' },
-  { icon: ClipboardList, label: 'Requests', href: '/admin/requests' },
-  { icon: BadgeCheck, label: 'Verification', href: '/admin/verify-doctors' },
-  { icon: Activity, label: 'Activity', href: '/admin/activity' },
-  { icon: Settings, label: 'Settings', href: '/admin/settings' },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
+  { icon: Users, label: "Patients", href: "/admin/patients" },
+  { icon: ClipboardList, label: "Requests", href: "/admin/requests" },
+  { icon: BadgeCheck, label: "Verification", href: "/admin/verify-doctors" },
+  { icon: Activity, label: "Activity", href: "/admin/activity" },
+  { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
 const Sidebar = () => {
   // Style for active NavLink
   const activeLinkStyle = {
-    backgroundColor: '#2563eb', // A blue color for active state
-    color: 'white',
+    backgroundColor: "#2563eb", // A blue color for active state
+    color: "white",
   };
 
   return (
@@ -48,7 +48,7 @@ const Sidebar = () => {
             <li key={link.label}>
               <NavLink
                 to={link.href}
-                end={link.href === '/admin'} // Ensure only the exact dashboard path is active
+                end={link.href === "/admin/dashboard"} // Ensure only the exact dashboard path is active
                 style={({ isActive }) => (isActive ? activeLinkStyle : {})}
                 className="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-slate-700 transition-colors duration-200"
               >
