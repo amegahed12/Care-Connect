@@ -107,7 +107,7 @@ const HomePage = () => {
 
         {/* Footer */}
         <div className="text-center mt-12 text-gray-500">
-          <p>&copy; 2024 Care Connect. All rights reserved.</p>
+          <p>&copy; 2025 Care Connect. All rights reserved.</p>
         </div>
       </div>
     </div>
