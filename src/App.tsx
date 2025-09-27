@@ -1,43 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminLayout from "./components/admin/AdminLayout";
+import PlatformActivity from "./pages/Admin/PlatformActivity";
+import ManagePatients from "./pages/Admin/ManagePatients";
+import ManageDoctors from "./pages/Admin/ManageDoctors";
+import CredentialVerification from "./pages/Admin/CredentialVerification";
+import Requests from "./pages/Admin/Requests";
+import PatientRegister from "./pages/Patient/PatientRegister";
+import PatientLogin from "./pages/Patient/PatientLogin";
+import DoctorRegister from "./pages/Doctor/DoctorRegister";
+import DoctorLogin from "./pages/Doctor/DoctorLogin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-
-  const [count, setCount] = useState(0)
-
-    function maipulateCount(inc: boolean) {
-    if (inc) 
-      setCount((count) => count + 1);
-    else if (count > 0)
-      setCount((count) => count - 1);
-  }
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Under Construction</h1>
-      <div className="card">
-        <button onClick={() => maipulateCount(true)}>
-          Increase
-        </button>
-        <button onClick={() => maipulateCount(false)}>
-          Decrease
-        </button>
-        <p>
-          Count is {count}
-        </p>
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        {/* Main Home Page */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Patient Routes */}
+        <Route path="/patient/register" element={<PatientRegister />} />
+        <Route path="/patient/login" element={<PatientLogin />} />
+
+        {/* Doctor Routes */}
+        <Route path="/doctor/register" element={<DoctorRegister />} />
+        <Route path="/doctor/login" element={<DoctorLogin />} />
+
+        {/* Admin Login */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="dashboard" element={<PlatformActivity />} />
+          <Route path="patients" element={<ManagePatients />} />
+          <Route path="requests" element={<Requests />} />
+          <Route path="doctors" element={<ManageDoctors />} />
+          <Route path="verify-doctors" element={<CredentialVerification />} />
+          <Route path="activity" element={<PlatformActivity />} />
+          <Route
+            path="settings"
+            element={
+              <div className="p-6">
+                <h1 className="text-2xl font-bold">Settings</h1>
+                <p>Under construction...</p>
+              </div>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
