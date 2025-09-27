@@ -1,18 +1,46 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminLayout from "./components/admin/AdminLayout";
 import PlatformActivity from "./pages/Admin/PlatformActivity";
 import ManagePatients from "./pages/Admin/ManagePatients";
 import ManageDoctors from "./pages/Admin/ManageDoctors";
 import CredentialVerification from "./pages/Admin/CredentialVerification";
 import Requests from "./pages/Admin/Requests";
+import PatientRegister from "./pages/Patient/PatientRegister";
+import PatientLogin from "./pages/Patient/PatientLogin";
+import DoctorRegister from "./pages/Doctor/DoctorRegister";
+import DoctorLogin from "./pages/Doctor/DoctorLogin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        {/* Main Home Page */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Patient Routes */}
+        <Route path="/patient/register" element={<PatientRegister />} />
+        <Route path="/patient/login" element={<PatientLogin />} />
+
+        {/* Doctor Routes */}
+        <Route path="/doctor/register" element={<DoctorRegister />} />
+        <Route path="/doctor/login" element={<DoctorLogin />} />
+
+        {/* Admin Login */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<PlatformActivity />} />
           <Route path="patients" element={<ManagePatients />} />
@@ -25,13 +53,11 @@ function App() {
             element={
               <div className="p-6">
                 <h1 className="text-2xl font-bold">Settings</h1>
-                <p>Settings page coming soon...</p>
+                <p>Under construction...</p>
               </div>
             }
           />
         </Route>
-        {/* Redirect root to admin dashboard */}
-        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );
