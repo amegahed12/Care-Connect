@@ -1,0 +1,35 @@
+care-connect/
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    ├── styles/
+    │   └── global.css
+    ├── data/
+    │   └── mockData.js            // ← ملف البيانات الكاذبة الوحيد للمشروع
+    ├── services/
+    │   └── api.js                 // ← واجهة بسيطة للتعامل مع mockData + localStorage
+    ├── context/
+    │   └── AuthContext.jsx        // ← إدارة الدخول/اليوزر (patient) + hooks
+    ├── utils/
+    │   ├── formatDate.js
+    │   └── localStorageHelper.js
+    ├── components/
+    │   ├── common/
+    │   │   ├── Button.jsx         // ← reusable
+    │   │   ├── Input.jsx          // ← reusable (label + input)
+    │   │   ├── FormField.jsx      // ← reusable (Input + validation message)
+    │   │   ├── Navbar.jsx         // ← patient nav (Profile, Appointments, History, Logout)
+    │   │   ├── Modal.jsx          // ← reusable modal (confirm cancel, edit forms)
+    │   │   └── Avatar.jsx         // ← reusable (image or placeholder)
+    │   └── patient/
+    │       ├── AppointmentCard.jsx
+    │       ├── DoctorCard.jsx
+    │       └── AppointmentForm.jsx
+    └── pages/
+        └── Patient/
+            ├── PatientRegister.jsx
+            ├── PatientLogin.jsx
+            ├── PatientLayout.jsx     // ← layout + <Outlet/> (uses Navbar)
+            ├── Profile.jsx
+            ├── Appointments.jsx
+            └── MedicalHistory.jsx
