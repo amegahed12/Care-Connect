@@ -4,7 +4,7 @@ import mockData from "../data/mockData.json";
 const STORAGE_KEY = "care_connect_data_v1";
 
 function normalizeData(raw) {
-  // هنحوّل بيانات doctors و patients بحيث تتوافق مع التوقعات في باقي الكود
+  // هحوّل بيانات doctors و patients بحيث تتوافق مع التوقعات في باقي الكود
   const patients = (raw.patients || []).map((p, idx) => ({
     id: p.id ?? idx + 1,
     name: p.name,
