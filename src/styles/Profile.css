@@ -11,4 +11,7 @@
 }
 
 /* Appointment small status */
-.appointment-card .muted { font-size: 13px; color: #5b6b7a; }
+.appointment-card .muted { 
+  font-size: 13px;
+  color: #5b6b7a;
+}

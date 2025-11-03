@@ -1,6 +1,4 @@
 /* ============================
-   Care Connect — Theme (Palette provided)
-   Replace src/styles/global.css with this file
    Colors:
      white:    #FFFFFF
      bg:       #E6EEF4
@@ -27,8 +25,14 @@
 }
 
 /* ========== Reset & Base ========== */
-* { box-sizing: border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-html, body, #root { height: 100%; }
+* { 
+  box-sizing: border-box; 
+  -webkit-font-smoothing:antialiased; 
+  -moz-osx-font-smoothing:grayscale;
+}
+html, body, #root { 
+  height: 100%;
+}
 body {
   margin: 0;
   background: linear-gradient(180deg, var(--page-bg) 0%, #E9F3F9 100%);
@@ -130,7 +134,12 @@ h2 {
 }
 
 /* Tabs */
-.tabs { display:flex; gap: 10px; margin-bottom: 18px; align-items:center; }
+.tabs { 
+  display:flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  align-items:center;
+}
 .tab {
   padding: 8px 12px;
   border-radius: 999px;
