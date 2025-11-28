@@ -1,0 +1,58 @@
+/* Helper small screens */
+@media (max-width: 1040px) {
+  .container { margin: 20px 18px 40px calc(230px + 36px); }
+}
+@media (max-width: 900px) {
+  /* make sidebar top horizontal */
+  .cc-nav {
+    position: relative;
+    width: calc(100% - 48px);
+    left: 24px;
+    top: 20px;
+    bottom: auto;
+    height: auto;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 14px;
+  }
+  .cc-nav-right { flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .cc-nav-right a { white-space: nowrap; padding: 8px 10px; font-size: 13px; }
+  .container { margin-left: 0; padding-top: 16px; margin-top: 12px; }
+  .page > .card:first-of-type { padding: 18px; border-radius: 12px; }
+  .profile-card { flex-direction: column; align-items: center; text-align: center; }
+  .profile-left { margin-bottom: 12px; }
+}
+
+/* Mobile small adjustments */
+@media (max-width: 480px) {
+  .cc-logo { font-size: 18px; }
+  .cc-btn { padding: 10px 12px; font-size: 13px; }
+  h2 { font-size: 22px; }
+  .form-card { width: 100%; padding: 8px; }
+}
+
+/* ========== Accessibility & small polish ========== */
+/* Focus styles for keyboard users */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+  outline: 3px solid rgba(91,132,255,0.16);
+  outline-offset: 2px;
+}
+
+/* Borders and separators */
+hr {
+  border: none;
+  border-top: 1px solid rgba(15,30,60,0.04);
+  margin: 12px 0;
+}
+
+/* Tiny utility */
+.text-right { 
+  text-align: right;
+}
+.center { 
+  text-align: center;
+}
+
+/* ========== End of Theme ========== */

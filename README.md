@@ -61,50 +61,78 @@ The platform reduces the need for physical visits while helping healthcare provi
 ## 📂 Project Structure
 
 ```markdown
+📂 Project Structure
 care-connect/
-├── public/ # Static files (favicon, index.html)
+├── public/ 
 │
-└── src/ # Application source code
-├── assets/ # Images, icons, and logos
+├── src/ 
+│  ├── assets/ 
+│  ├── components/
+│  │  ├── common/ # Reusable UI components
+│  │  │   ├── Button.jsx
+│  │  │   ├── Input.jsx
+│  │  │   ├── FormField.jsx
+│  │  │   ├── Navbar.jsx
+│  │  │   ├── Modal.jsx
+│  │  │   └── Avatar.jsx
+│  │  │
+│  │  ├── patient/
+│  │  │   ├── AppointmentCard.jsx
+│  │  │   ├── DoctorCard.jsx
+│  │  │   └── AppointmentForm.jsx
+│  │  │
+│  │  ├── Admin/
+│  │  └── ProtectedRoute.tsx
+│  │
+│  ├── data/
+│  │  └──mockData.json
+│  │ 
+│  ├── pages/ # Page-level components
+│  │  ├── Doctor/
+│  │  ├── Admin/
+│  │  ├── Patient/
+│  │  │  ├── Patient-Login.jsx
+│  │  │  ├── Patient-Register.jsx
+│  │  │  ├── Profile.jsx
+│  │  │  ├── PatientLayout.jsx
+│  │  │  ├── Appointments.jsx
+│  │  │  └── MedicalHistory.jsx
+│  │  │
+│  │  └── HomePage.tsx
+│  │
+│  ├── context/
+│  │  └── AuthContext.tsx
+│  │
+│  ├── services/
+│  │ └── api.js
+│  │
+│  ├── styles/ 
+│  │   ├── Appointments.css
+│  │   ├── Global.css
+│  │   ├── Login_Register.css
+│  │   ├── Profile.css
+│  │   └── MedicalHistory.css
+│  │
+│  ├── utils/
+│  │  └── formatDate.ts
+│  │
+│  ├── App.tsx
+│  ├── App.css
+│  ├── index.css
+│  ├── main.tsx
+│  └── vite-env.d.ts
 │
-├── components/ # Reusable UI components
-│ ├── Button.tsx
-│ ├── Navbar.tsx
-│ └── ...
-│
-├── context/ # React Context (e.g., Auth, Theme)
-│ └── AuthContext.tsx
-│
-├── hooks/ # Custom React hooks
-│ └── useAuth.ts
-│
-├── pages/ # Page-level components
-│ ├── Patient/
-│ │ ├── PatientDashboard.tsx
-│ │ └── BookAppointment.tsx
-│ │
-│ ├── Doctor/
-│ │ └── DoctorDashboard.tsx
-│ │
-│ └── Admin/
-│ └── AdminDashboard.tsx
-│
-├── services/ # API services and mock data
-│ └── api.ts
-│
-├── styles/ # Global styles or Tailwind config
-│
-├── utils/ # Helper/utility functions
-│ └── formatDate.ts
-│
-├── App.tsx # Main App component
-├── main.tsx # React entry point
-└── vite-env.d.ts # TypeScript environment types
-│
-├── .eslintrc.js # ESLint configuration
-├── .prettierrc # Prettier configuration
-├── package.json # Project metadata and dependencies
-└── README.md # Project documentation
+├── .gitignore
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 
 ---

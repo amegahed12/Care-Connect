@@ -16,6 +16,8 @@ interface PendingDoctor {
 }
 
 const CredentialVerification = () => {
+  
+  // gonna fix this later, doctor credintals verfied by admin
   const [pendingDoctors, setPendingDoctors] = useState<PendingDoctor[]>(
     mockData.pendingVerifications
   );

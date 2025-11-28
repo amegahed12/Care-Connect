@@ -1,0 +1,17 @@
+/* Cards for lists (doctor/appointment) */
+.card.doctor-card, .card.appointment-card, .doctor-card, .appointment-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--white) 0%, #fbfdff 100%);
+  border: 1px solid rgba(20,30,40,0.03);
+  margin-bottom: 10px;
+}
+
+/* Appointment small status */
+.appointment-card .muted { 
+  font-size: 13px;
+  color: #5b6b7a;
+}

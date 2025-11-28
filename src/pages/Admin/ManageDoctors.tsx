@@ -9,7 +9,7 @@ interface Doctor {
   status: string;
   email: string;
   phone: string;
-  avatar: string;
+  avatarUrl: string;
   verified: boolean;
   joinDate: string;
   appointments: number;
@@ -122,7 +122,7 @@ const ManageDoctors = () => {
                   <td className="py-4 px-4">
                     <div className="flex items-center space-x-3">
                       <img
-                        src={doctor.avatar}
+                        src={doctor.avatarUrl}
                         alt={doctor.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />
