@@ -1,216 +1,126 @@
 {
   "doctors": [
     {
-      "id": 1,
+      "id": "d1",
       "name": "Dr Sarah Lee",
       "specialty": "Cardiology",
       "status": "Active",
       "email": "sarah.lee@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0101",
-      "avatarUrl": "https://i.pravatar.cc/150?u=sarah",
+      "avatar": "https://i.pravatar.cc/150?u=sarah",
       "verified": true,
       "joinDate": "2023-01-15",
-      "appointments": 156,
-      "availableSlots": [
-        "2025-11-03T10:00",
-        "2025-11-03T11:00",
-        "2025-11-04T15:00"
-      ]
+      "appointments": 156
     },
     {
-      "id": 2,
+      "id": "d2",
       "name": "Dr Michael Chen",
       "specialty": "Radiology",
       "status": "Active",
       "email": "michael.chen@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0102",
-      "avatarUrl": "https://i.pravatar.cc/150?u=michael",
+      "avatar": "https://i.pravatar.cc/150?u=michael",
       "verified": true,
       "joinDate": "2023-02-20",
-      "appointments": 89,
-      "availableSlots": [
-        "2025-11-03T10:00",
-        "2025-11-03T11:00",
-        "2025-11-04T15:00"
-      ]
+      "appointments": 89
     },
     {
-      "id": 3,
+      "id": "d3",
       "name": "Dr Emily White",
       "specialty": "Pediatrics",
       "status": "Inactive",
       "email": "emily.white@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0103",
-      "avatarUrl": "https://i.pravatar.cc/150?u=emily",
+      "avatar": "https://i.pravatar.cc/150?u=emily",
       "verified": false,
       "joinDate": "2023-03-10",
-      "appointments": 67,
-      "availableSlots": [
-        "2025-11-03T10:00",
-        "2025-11-03T11:00",
-        "2025-11-04T15:00"
-      ]
+      "appointments": 67
     },
     {
-      "id": 4,
+      "id": "d4",
       "name": "Dr James Wilson",
       "specialty": "Dermatology",
       "status": "Pending",
       "email": "james.wilson@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0104",
-      "avatarUrl": "https://i.pravatar.cc/150?u=james",
+      "avatar": "https://i.pravatar.cc/150?u=james",
       "verified": false,
       "joinDate": "2023-04-05",
-      "appointments": 0,
-      "availableSlots": [
-        "2025-11-03T10:00",
-        "2025-11-03T11:00",
-        "2025-11-04T15:00"
-      ]
+      "appointments": 0
     },
     {
-      "id": 5,
+      "id": "d5",
       "name": "Dr Lisa Garcia",
       "specialty": "Neurology",
       "status": "Active",
       "email": "lisa.garcia@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0105",
-      "avatarUrl": "https://i.pravatar.cc/150?u=lisa",
+      "avatar": "https://i.pravatar.cc/150?u=lisa",
       "verified": true,
       "joinDate": "2023-01-30",
-      "appointments": 203,
-      "availableSlots": [
-        "2025-11-03T10:00",
-        "2025-11-03T11:00",
-        "2025-11-04T15:00"
-      ]
+      "appointments": 203
     }
   ],
   "patients": [
     {
-      "id": 1,
+      "id": "p1",
       "name": "John Smith",
       "age": 34,
       "email": "john.smith@email.com",
-      "password": "password123",
       "phone": "+1-555-0201",
-      "medicalHistoryId": 1,
       "condition": "Diabetes",
       "status": "Active",
       "registered": "2023-01-14",
-      "avatarUrl": "https://i.pravatar.cc/150?u=john",
+      "avatar": "https://i.pravatar.cc/150?u=john",
       "lastVisit": "2023-12-15"
     },
     {
-      "id": 2,
+      "id": "p2",
       "name": "Jane Doe",
       "age": 28,
       "email": "jane.doe@email.com",
-      "password": "password123",
       "phone": "+1-555-0202",
-      "medicalHistoryId": 2,
       "condition": "Asthma",
       "status": "Active",
       "registered": "2023-03-22",
-      "avatarUrl": "https://i.pravatar.cc/150?u=jane",
+      "avatar": "https://i.pravatar.cc/150?u=jane",
       "lastVisit": "2023-12-10"
     },
     {
-      "id": 3,
+      "id": "p3",
       "name": "Michael Johnson",
       "age": 45,
       "email": "michael.johnson@email.com",
-      "password": "password123",
       "phone": "+1-555-0203",
-      "medicalHistoryId": 3,
       "condition": "Hypertension",
       "status": "Active",
       "registered": "2022-11-05",
-      "avatarUrl": "https://i.pravatar.cc/150?u=michaelj",
+      "avatar": "https://i.pravatar.cc/150?u=michaelj",
       "lastVisit": "2023-12-08"
     },
     {
-      "id": 4,
+      "id": "p4",
       "name": "Sarah Williams",
       "age": 52,
       "email": "sarah.williams@email.com",
-      "password": "password123",
       "phone": "+1-555-0204",
-      "medicalHistoryId": 4,
       "condition": "Arthritis",
       "status": "Inactive",
       "registered": "2023-02-18",
-      "avatarUrl": "https://i.pravatar.cc/150?u=sarahw",
+      "avatar": "https://i.pravatar.cc/150?u=sarahw",
       "lastVisit": "2023-11-20"
-    }
-  ],
-  "appointments": [
-    {
-      "id": 1,
-      "patientId": 1,
-      "doctorId": 2,
-      "date": "2025-11-05T14:00",
-      "status": "upcoming"
     },
     {
-      "id": 2,
-      "patientId": 2,
-      "doctorId": 2,
-      "date": "2025-11-05T14:00",
-      "status": "upcoming"
-    },
-    {
-      "id": 3,
-      "patientId": 3,
-      "doctorId": 2,
-      "date": "2025-11-05T14:00",
-      "status": "upcoming"
-    },
-    {
-      "id": 4,
-      "patientId": 4,
-      "doctorId": 2,
-      "date": "2025-11-05T14:00",
-      "status": "upcoming"
-    }
-  ],
-  "medicalHistories": [
-    {
-    "id": 1,
-    "patientId": 1,
-    "conditions": "None",
-    "medications": "None",
-    "allergies": "Penicillin",
-    "notes": "No chronic illness."
-    },
-    {
-    "id": 2,
-    "patientId": 2,
-    "conditions": "None",
-    "medications": "None",
-    "allergies": "Penicillin",
-    "notes": "No chronic illness."
-    },
-    {
-    "id": 3,
-    "patientId": 3,
-    "conditions": "None",
-    "medications": "None",
-    "allergies": "Penicillin",
-    "notes": "No chronic illness."
-    },
-    {
-    "id": 4,
-    "patientId": 4,
-    "conditions": "None",
-    "medications": "None",
-    "allergies": "Penicillin",
-    "notes": "No chronic illness."
+      "id": "p5",
+      "name": "Robert Brown",
+      "age": 38,
+      "email": "robert.brown@email.com",
+      "phone": "+1-555-0205",
+      "condition": "Migraine",
+      "status": "Active",
+      "registered": "2023-04-12",
+      "avatar": "https://i.pravatar.cc/150?u=robert",
+      "lastVisit": "2023-12-12"
     }
   ],
   "pendingVerifications": [
@@ -220,9 +130,8 @@
       "specialty": "Cardiology",
       "status": "Pending",
       "email": "sarah.lee@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0101",
-      "avatarUrl": "https://i.pravatar.cc/150?u=sarah",
+      "avatar": "https://i.pravatar.cc/150?u=sarah",
       "documents": ["medical_license.pdf", "resume.pdf", "certifications.pdf"],
       "submittedDate": "2023-12-10",
       "experience": "8 years"
@@ -233,9 +142,8 @@
       "specialty": "Radiology",
       "status": "Pending",
       "email": "michael.chen@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0102",
-      "avatarUrl": "https://i.pravatar.cc/150?u=michael",
+      "avatar": "https://i.pravatar.cc/150?u=michael",
       "documents": ["medical_license.pdf", "resume.pdf"],
       "submittedDate": "2023-12-08",
       "experience": "5 years"
@@ -246,9 +154,8 @@
       "specialty": "Pediatrics",
       "status": "Pending",
       "email": "emily.white@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0103",
-      "avatarUrl": "https://i.pravatar.cc/150?u=emily",
+      "avatar": "https://i.pravatar.cc/150?u=emily",
       "documents": ["medical_license.pdf", "resume.pdf", "certifications.pdf", "references.pdf"],
       "submittedDate": "2023-12-05",
       "experience": "12 years"
@@ -259,9 +166,8 @@
       "specialty": "Dermatology",
       "status": "Pending",
       "email": "james.wilson@careconnect.com",
-      "password": "password123",
       "phone": "+1-555-0104",
-      "avatarUrl": "https://i.pravatar.cc/150?u=james",
+      "avatar": "https://i.pravatar.cc/150?u=james",
       "documents": ["medical_license.pdf", "resume.pdf"],
       "submittedDate": "2023-12-12",
       "experience": "6 years"
@@ -323,5 +229,4 @@
       }
     ]
   }
-
 }
