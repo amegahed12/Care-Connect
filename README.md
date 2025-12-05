@@ -63,6 +63,7 @@ The platform reduces the need for physical visits while helping healthcare provi
 
 ## 📂 Project Structure
 
+```text
 care-connect/
 ├── public/ # Static files (favicon, index.html)
 │
