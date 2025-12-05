@@ -32,6 +32,7 @@ The platform reduces the need for physical visits while helping healthcare provi
 - Responsive web design for mobile and desktop
 - Role-based navigation (Patient, Doctor, Admin)
 - Mock data integration for development
+- **Health Resources**: Real-time health topics fetched from MyHealthfinder API
 
 ---
 
@@ -55,6 +56,7 @@ The platform reduces the need for physical visits while helping healthcare provi
 | Styling         | Tailwind CSS                             |
 | Version Control | Git + GitHub                             |
 | Design Tools    | Figma (Wireframes)                       |
+| APIs            | MyHealthfinder API (v4)                  |
 | Optional        | Node.js + Express (for backend), Docker  |
 
 ---
@@ -83,7 +85,8 @@ care-connect/
     │   └── Admin/
     │
     ├── services/ # API services
-    │   └── authService.ts
+    │   ├── authService.ts
+    │   └── healthService.ts # MyHealthfinder API service
     │
     ├── store/ # State management
     │   └── store.ts # Zustand store
@@ -93,6 +96,7 @@ care-connect/
     └── vite-env.d.ts # TypeScript environment types
     │
     ├── eslint.config.js # ESLint configuration
+    ├── vite.config.ts # Vite configuration (Proxy setup)
     ├── package.json # Project metadata and dependencies
     └── README.md # Project documentation
 ```

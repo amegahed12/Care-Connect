@@ -10,10 +10,8 @@ const HealthResources: React.FC = () => {
         const loadTopics = async () => {
             try {
                 const data = await fetchHealthTopics();
-                console.log('Fetched Data in Component:', data);
                 // Filter to show only Topics (not Categories) and limit to 6
                 const topics = data.filter(item => item.Type === 'Topic');
-                console.log('Filtered Topics:', topics);
                 setTopics(topics.slice(0, 6));
             } catch (error) {
                 console.error('Failed to load health topics', error);
