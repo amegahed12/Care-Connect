@@ -17,33 +17,24 @@ export interface Appointment {
   medicalInfoShared?: boolean;
 }
 
-export interface Notification {
-  id: string;
-  userId: number | string;
-  type: 'info_request' | 'appointment_cancelled' | 'appointment_rescheduled';
-  message: string;
-  appointmentId: string;
-  read: boolean;
-  createdAt: string;
-}
+
 
 
 
 interface AppState {
   // Users registered through the app
   registeredUsers: User[];
-  
+
   // Appointments
   appointments: Appointment[];
-  
-  // Notifications
-  notifications: Notification[];
+
+
 
   // Actions
   addUser: (user: User) => void;
   getUserByEmail: (email: string) => User | undefined;
   getUserById: (id: number | string) => User | undefined;
-  
+
   addAppointment: (appointment: Omit<Appointment, 'id' | 'createdAt' | 'status'>) => void;
   updateAppointment: (id: string, updates: Partial<Appointment>) => void;
   getAppointmentsByPatient: (patientId: number | string) => Appointment[];
@@ -51,10 +42,8 @@ interface AppState {
   cancelAppointment: (id: string) => void;
   updateUser: (id: number | string, updates: Partial<User>) => void;
   deleteUser: (id: number | string) => void;
-  
+
   // Notification Actions
-  addNotification: (notification: Omit<Notification, 'id' | 'createdAt' | 'read'>) => void;
-  markNotificationRead: (id: string) => void;
   shareMedicalInfo: (appointmentId: string) => void;
 }
 
@@ -65,7 +54,6 @@ export const useStore = create<AppState>()(
     (set, get) => ({
       registeredUsers: [],
       appointments: [],
-      notifications: [],
 
       addUser: (user) => {
         set((state) => ({
@@ -88,7 +76,7 @@ export const useStore = create<AppState>()(
           status: 'scheduled',
           createdAt: new Date().toISOString(),
         };
-        
+
         set((state) => ({
           appointments: [...state.appointments, appointment],
         }));
@@ -132,26 +120,7 @@ export const useStore = create<AppState>()(
         }));
       },
 
-      addNotification: (notificationData) => {
-        console.log('Adding notification:', notificationData);
-        const notification: Notification = {
-          ...notificationData,
-          id: `notif-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          read: false,
-          createdAt: new Date().toISOString(),
-        };
-        set((state) => ({
-          notifications: [...(state.notifications || []), notification],
-        }));
-      },
 
-      markNotificationRead: (id) => {
-        set((state) => ({
-          notifications: (state.notifications || []).map((n) =>
-            n.id === id ? { ...n, read: true } : n
-          ),
-        }));
-      },
 
       shareMedicalInfo: (appointmentId) => {
         set((state) => ({

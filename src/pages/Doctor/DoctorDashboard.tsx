@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, CheckCircle, XCircle, Activity, Bell, User, AlertCircle } from 'lucide-react';
+import { Clock, CheckCircle, XCircle, Activity, User, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useStore } from '../../store/store';
 
@@ -8,20 +8,14 @@ const DoctorDashboard = () => {
   const { user, logout, login } = useAuth();
   const getAppointmentsByDoctor = useStore((state) => state.getAppointmentsByDoctor);
   const updateAppointment = useStore((state) => state.updateAppointment);
-  const addNotification = useStore((state) => state.addNotification);
-  const markNotificationRead = useStore((state) => state.markNotificationRead);
-  const notifications = useStore((state) => state.notifications);
   const getUserById = useStore((state) => state.getUserById);
   const updateUser = useStore((state) => state.updateUser);
   const addUser = useStore((state) => state.addUser);
-  
+
   const [appointments, setAppointments] = useState<any[]>([]);
   const [isAvailable, setIsAvailable] = useState(true);
-  const [requestSent, setRequestSent] = useState<{[key: string]: boolean}>({});
-  const [showNotifications, setShowNotifications] = useState(false);
+  const [requestSent, setRequestSent] = useState<{ [key: string]: boolean }>({});
   const [selectedPatient, setSelectedPatient] = useState<any | null>(null);
-
-  const doctorNotifications = notifications?.filter(n => n.userId === user?.id && !n.read) || [];
 
   useEffect(() => {
     if (user) {
@@ -43,32 +37,32 @@ const DoctorDashboard = () => {
         setAppointments([]);
       }
     }
-  }, [user, getAppointmentsByDoctor, notifications, getUserById]);
+  }, [user, getAppointmentsByDoctor, getUserById]);
 
   const toggleStatus = () => {
     if (!user) return;
-    
+
     const newStatus = !isAvailable;
     setIsAvailable(newStatus);
-    
+
     const statusString = newStatus ? 'Active' : 'Away';
-    
+
     // Check if user exists in store
     const existingUser = getUserById(user.id);
-    
+
     if (existingUser) {
       // Update in store
       updateUser(user.id, { status: statusString } as any);
     } else {
       // Add to store if not exists (for mock users)
       // We need to add the password field for the login logic to work with store users
-      addUser({ 
-        ...user, 
+      addUser({
+        ...user,
         status: statusString,
         password: 'doctor123' // Default password for mock doctors
       } as any);
     }
-    
+
     // Update local auth context to reflect change immediately
     login({ ...user, status: statusString } as any);
   };
@@ -92,25 +86,16 @@ const DoctorDashboard = () => {
   };
 
   const handleRequestInfo = (appointment: any) => {
-    addNotification({
-      userId: appointment.patientId,
-      type: 'info_request',
-      message: `Dr. ${user?.name} requested your medical information for the appointment on ${appointment.date}.`,
-      appointmentId: appointment.id,
-    });
+    // Logic to request info (maybe just update appointment status or similar in future)
     setRequestSent(prev => ({ ...prev, [appointment.id]: true }));
     alert('Request sent to patient!');
-  };
-
-  const handleMarkRead = (id: string) => {
-    markNotificationRead(id);
   };
 
   const handleViewPatient = (patientId: string | number) => {
     console.log('Attempting to view patient with ID:', patientId);
     const patient = getUserById(patientId);
     console.log('Patient found in store:', patient);
-    
+
     if (patient) {
       setSelectedPatient(patient);
     } else {
@@ -153,74 +138,20 @@ const DoctorDashboard = () => {
                 <span className="text-sm text-gray-500 mr-2">Status:</span>
                 <button
                   onClick={toggleStatus}
-                  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                    isAvailable ? 'bg-green-500' : 'bg-gray-200'
-                  }`}
+                  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isAvailable ? 'bg-green-500' : 'bg-gray-200'
+                    }`}
                 >
                   <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                      isAvailable ? 'translate-x-5' : 'translate-x-0'
-                    }`}
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isAvailable ? 'translate-x-5' : 'translate-x-0'
+                      }`}
                   />
                 </button>
                 <span className="ml-2 text-sm font-medium text-gray-700">
                   {isAvailable ? 'Available' : 'Away'}
                 </span>
               </div>
-              
-              {/* Notification Bell */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <Bell className="h-6 w-6" />
-                  {doctorNotifications.length > 0 && (
-                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
-                  )}
-                </button>
 
-                {/* Notification Dropdown */}
-                {showNotifications && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <h3 className="text-sm font-medium text-gray-900">Notifications</h3>
-                    </div>
-                    {doctorNotifications.length === 0 ? (
-                      <div className="px-4 py-4 text-sm text-gray-500 text-center">
-                        No new notifications
-                      </div>
-                    ) : (
-                      <ul className="divide-y divide-gray-100">
-                        {doctorNotifications.map((notification) => (
-                          <li key={notification.id} className="px-4 py-3 hover:bg-gray-50">
-                            <div className="flex items-start">
-                              <div className="flex-1 w-0">
-                                <p className="text-sm font-medium text-gray-900">
-                                  {notification.type === 'appointment_cancelled' ? 'Appointment Cancelled' : 
-                                   notification.type === 'appointment_rescheduled' ? 'Appointment Rescheduled' : 'Info Request'}
-                                </p>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {notification.message}
-                                </p>
-                                <div className="mt-2">
-                                  <button
-                                    onClick={() => handleMarkRead(notification.id)}
-                                    className="text-xs text-blue-600 hover:text-blue-800 font-medium"
-                                  >
-                                    Mark as Read
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                )}
-              </div>
+
 
               <div className="flex items-center">
                 <span className="text-gray-700 mr-4">Dr. {user?.name}</span>
@@ -250,14 +181,13 @@ const DoctorDashboard = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Verification Alert */}
         {user && ((user as any).verificationStatus === 'pending' || (user as any).verificationStatus === 'rejected' || (user as any).verificationStatus === 'unverified') && (
-          <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${
-            (user as any).verificationStatus === 'pending' ? 'bg-orange-50 text-orange-800' : 'bg-red-50 text-red-800'
-          }`}>
+          <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${(user as any).verificationStatus === 'pending' ? 'bg-orange-50 text-orange-800' : 'bg-red-50 text-red-800'
+            }`}>
             <div className="flex items-center">
               <AlertCircle className="h-5 w-5 mr-2" />
               <span>
-                {(user as any).verificationStatus === 'pending' 
-                  ? 'Your account is pending verification. Some features may be limited.' 
+                {(user as any).verificationStatus === 'pending'
+                  ? 'Your account is pending verification. Some features may be limited.'
                   : 'Your account is not verified. Please submit your documents.'}
               </span>
             </div>
@@ -279,84 +209,83 @@ const DoctorDashboard = () => {
           <ul className="divide-y divide-gray-200">
             {appointments.map((appointment) => (
               <li key={appointment.id}>
-                  <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0">
-                          <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
-                            {(appointment.patientName || 'U').charAt(0)}
-                          </div>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-lg font-medium text-blue-600">{appointment.patientName}</div>
-                          <div className="text-sm text-gray-500">{appointment.specialty}</div>
+                <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
+                          {(appointment.patientName || 'U').charAt(0)}
                         </div>
                       </div>
-                      <div className="flex items-center space-x-6">
-                        <div className="flex flex-col items-end">
-                          <div className="flex items-center text-sm text-gray-500">
-                            <Clock className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
-                            {appointment.time}
-                          </div>
-                          <div className="text-xs text-gray-400 mt-1">{appointment.date}</div>
-                          <div className="mt-1">
-                            {appointment.medicalInfoShared ? (
-                              <div className="flex flex-col items-end">
-                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 mb-1">
-                                  Medical Info Shared
-                                </span>
-                                <button
-                                  onClick={() => handleViewPatient(appointment.patientId)}
-                                  className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium"
-                                >
-                                  <User className="h-3 w-3 mr-1" />
-                                  View Record
-                                </button>
-                              </div>
-                            ) : (
-                              <div className="flex flex-col items-end">
-                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 mb-1">
-                                  Info Not Shared
-                                </span>
-                                {appointment.status === 'scheduled' && (
-                                  <button
-                                    onClick={() => handleRequestInfo(appointment)}
-                                    disabled={requestSent[appointment.id]}
-                                    className={`text-xs text-blue-600 hover:text-blue-800 ${requestSent[appointment.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                  >
-                                    {requestSent[appointment.id] ? 'Request Sent' : 'Request Info'}
-                                  </button>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        
-                        {appointment.status === 'scheduled' ? (
-                          <div className="flex space-x-2">
-                            <button 
-                              onClick={() => handleCompleteAppointment(appointment.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none">
-                              <CheckCircle className="h-4 w-4 mr-1" />
-                              Complete
-                            </button>
-                            <button 
-                              onClick={() => handleCancelAppointment(appointment.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none">
-                              <XCircle className="h-4 w-4 mr-1" />
-                              Cancel
-                            </button>
-                          </div>
-                        ) : (
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            appointment.status === 'completed' ? 'bg-gray-100 text-gray-800' : 'bg-red-100 text-red-800'
-                          }`}>
-                            {appointment.status}
-                          </span>
-                        )}
+                      <div className="ml-4">
+                        <div className="text-lg font-medium text-blue-600">{appointment.patientName}</div>
+                        <div className="text-sm text-gray-500">{appointment.specialty}</div>
                       </div>
                     </div>
+                    <div className="flex items-center space-x-6">
+                      <div className="flex flex-col items-end">
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Clock className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
+                          {appointment.time}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">{appointment.date}</div>
+                        <div className="mt-1">
+                          {appointment.medicalInfoShared ? (
+                            <div className="flex flex-col items-end">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 mb-1">
+                                Medical Info Shared
+                              </span>
+                              <button
+                                onClick={() => handleViewPatient(appointment.patientId)}
+                                className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium"
+                              >
+                                <User className="h-3 w-3 mr-1" />
+                                View Record
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-end">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 mb-1">
+                                Info Not Shared
+                              </span>
+                              {appointment.status === 'scheduled' && (
+                                <button
+                                  onClick={() => handleRequestInfo(appointment)}
+                                  disabled={requestSent[appointment.id]}
+                                  className={`text-xs text-blue-600 hover:text-blue-800 ${requestSent[appointment.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                  {requestSent[appointment.id] ? 'Request Sent' : 'Request Info'}
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {appointment.status === 'scheduled' ? (
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => handleCompleteAppointment(appointment.id)}
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                            <CheckCircle className="h-4 w-4 mr-1" />
+                            Complete
+                          </button>
+                          <button
+                            onClick={() => handleCancelAppointment(appointment.id)}
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+                            <XCircle className="h-4 w-4 mr-1" />
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${appointment.status === 'completed' ? 'bg-gray-100 text-gray-800' : 'bg-red-100 text-red-800'
+                          }`}>
+                          {appointment.status}
+                        </span>
+                      )}
+                    </div>
                   </div>
+                </div>
               </li>
             ))}
           </ul>
