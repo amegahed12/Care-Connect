@@ -1,53 +1,41 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, Calendar, Clock, Activity, Plus, User } from 'lucide-react';
+import { Calendar, Clock, Activity, Plus, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useStore } from '../../store/store';
 
 const PatientDashboard = () => {
   const { user, logout } = useAuth();
   const getAppointmentsByPatient = useStore((state) => state.getAppointmentsByPatient);
-  const notifications = useStore((state) => state.notifications);
-  const markNotificationRead = useStore((state) => state.markNotificationRead);
-  const shareMedicalInfo = useStore((state) => state.shareMedicalInfo);
-  
   const updateAppointment = useStore((state) => state.updateAppointment);
   const cancelAppointment = useStore((state) => state.cancelAppointment);
-  const addNotification = useStore((state) => state.addNotification);
-  
+
   const [appointments, setAppointments] = useState<any[]>([]);
-  const [showNotifications, setShowNotifications] = useState(false);
-  
+
   // Reschedule Modal State
   const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState('');
 
-  const userNotifications = notifications?.filter(n => n.userId === user?.id && !n.read) || [];
 
- useEffect(() => {
+
+  useEffect(() => {
     if (user) {
       // Fetch real appointments from store
       const userAppointments = getAppointmentsByPatient(user.id);
       setAppointments(userAppointments);
     }
-  }, [user, getAppointmentsByPatient, notifications, isRescheduleModalOpen]); // Refresh on modal close too
+  }, [user, getAppointmentsByPatient, isRescheduleModalOpen]); // Refresh on modal close too
 
   const handleCancel = (appointment: any) => {
     if (window.confirm('Are you sure you want to cancel this appointment?')) {
       // console.log('Cancelling appointment:', appointment);
       // console.log('Doctor ID for notification:', appointment.doctorId);
       cancelAppointment(appointment.id);
-      
-      // Notify Doctor
-      addNotification({
-        userId: appointment.doctorId,
-        type: 'appointment_cancelled',
-        message: `Patient ${user?.name} cancelled the appointment on ${appointment.date} at ${appointment.time}.`,
-        appointmentId: appointment.id,
-      });
-      
+
+
+
       alert('Appointment cancelled.');
       // Refresh
       if (user) {
@@ -74,17 +62,11 @@ const PatientDashboard = () => {
       status: 'scheduled' // Reset status to scheduled if it was cancelled
     });
 
-    // Notify Doctor
-    addNotification({
-      userId: selectedAppointment.doctorId,
-      type: 'appointment_rescheduled',
-      message: `Patient ${user?.name} rescheduled the appointment to ${newDate} at ${newTime}.`,
-      appointmentId: selectedAppointment.id,
-    });
+
 
     setIsRescheduleModalOpen(false);
     alert('Appointment rescheduled successfully.');
-    
+
     // Refresh
     if (user) {
       const userAppointments = getAppointmentsByPatient(user.id);
@@ -92,16 +74,7 @@ const PatientDashboard = () => {
     }
   };
 
-  const handleShareInfo = (notification: any) => {
-    shareMedicalInfo(notification.appointmentId);
-    markNotificationRead(notification.id);
-    // Refresh appointments
-    if (user) {
-      const userAppointments = getAppointmentsByPatient(user.id);
-      setAppointments(userAppointments);
-    }
-    alert('Medical information shared successfully!');
-  };
+
 
 
   return (
@@ -115,60 +88,7 @@ const PatientDashboard = () => {
               <span className="ml-2 text-xl font-bold text-gray-900">Care Connect</span>
             </div>
             <div className="flex items-center">
-              {/* Notification Bell */}
-              <div className="relative mr-6">
-                <button
-                  onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <Bell className="h-6 w-6" />
-                  {userNotifications.length > 0 && (
-                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
-                  )}
-                </button>
 
-                {/* Notification Dropdown */}
-                {showNotifications && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <h3 className="text-sm font-medium text-gray-900">Notifications</h3>
-                    </div>
-                    {userNotifications.length === 0 ? (
-                      <div className="px-4 py-4 text-sm text-gray-500 text-center">
-                        No new notifications
-                      </div>
-                    ) : (
-                      <ul className="divide-y divide-gray-100">
-                        {userNotifications.map((notification) => (
-                          <li key={notification.id} className="px-4 py-3 hover:bg-gray-50">
-                            <div className="flex items-start">
-                              <div className="flex-1 w-0">
-                                <p className="text-sm font-medium text-gray-900">
-                                  {notification.type === 'info_request' ? 'Medical Info Request' : 
-                                   notification.type === 'appointment_cancelled' ? 'Appointment Cancelled' : 
-                                   notification.type === 'appointment_rescheduled' ? 'Appointment Rescheduled' : 'Notification'}
-                                </p>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {notification.message}
-                                </p>
-                                <div className="mt-2">
-                                  <button
-                                    onClick={() => handleShareInfo(notification)}
-                                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                  >
-                                    Share Now
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                )}
-              </div>
 
               <span className="text-gray-700 mr-4">Welcome, {user?.name}</span>
               <img
@@ -298,11 +218,10 @@ const PatientDashboard = () => {
                         {appointment.time}
                       </div>
                     </div>
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      appointment.status === 'scheduled' ? 'bg-green-100 text-green-800' : 
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${appointment.status === 'scheduled' ? 'bg-green-100 text-green-800' :
                       appointment.status === 'completed' ? 'bg-gray-100 text-gray-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
+                        'bg-red-100 text-red-800'
+                      }`}>
                       {appointment.status}
                     </span>
                   </div>
