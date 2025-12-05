@@ -14,7 +14,6 @@ export interface Appointment {
   time: string;
   status: 'scheduled' | 'completed' | 'cancelled';
   createdAt: string;
-  medicalInfoShared?: boolean;
 }
 
 
@@ -42,12 +41,7 @@ interface AppState {
   cancelAppointment: (id: string) => void;
   updateUser: (id: number | string, updates: Partial<User>) => void;
   deleteUser: (id: number | string) => void;
-
-  // Notification Actions
-  shareMedicalInfo: (appointmentId: string) => void;
 }
-
-
 
 export const useStore = create<AppState>()(
   persist(
@@ -119,20 +113,9 @@ export const useStore = create<AppState>()(
           registeredUsers: state.registeredUsers.filter((user) => user.id !== id),
         }));
       },
-
-
-
-      shareMedicalInfo: (appointmentId) => {
-        set((state) => ({
-          appointments: state.appointments.map((apt) =>
-            apt.id === appointmentId ? { ...apt, medicalInfoShared: true } : apt
-          ),
-        }));
-      },
     }),
     {
       name: 'care-connect-storage',
     }
   )
 );
-
