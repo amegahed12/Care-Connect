@@ -10,19 +10,18 @@ const BookAppointment = () => {
   const { user } = useAuth();
   const addAppointment = useStore((state) => state.addAppointment);
   const registeredUsers = useStore((state) => state.registeredUsers);
-  
+
   const [selectedSpecialty, setSelectedSpecialty] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDoctor, setSelectedDoctor] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
-  const [shareMedicalInfo, setShareMedicalInfo] = useState(false);
   const [viewingDoctor, setViewingDoctor] = useState<any | null>(null);
   const [doctors, setDoctors] = useState<any[]>([]);
 
   useEffect(() => {
     const registeredDoctors = registeredUsers.filter(u => u.role === 'doctor');
-    
+
     // 1. Start with mock doctors
     let allDoctors = mockData.doctors.map(doc => ({
       ...doc,
@@ -40,7 +39,7 @@ const BookAppointment = () => {
     });
 
     // 3. Add new doctors from store that aren't in mock data
-    const newStoreDoctors = registeredDoctors.filter(storeDoc => 
+    const newStoreDoctors = registeredDoctors.filter(storeDoc =>
       !allDoctors.some(doc => String(doc.id) === String(storeDoc.id))
     );
 
@@ -56,7 +55,7 @@ const BookAppointment = () => {
   }, [registeredUsers]);
 
   const specialties = Array.from(new Set(doctors.map(d => d.specialty)));
-  
+
   const filteredDoctors = doctors.filter(doctor => {
     const matchesSpecialty = selectedSpecialty ? doctor.specialty === selectedSpecialty : true;
     const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -66,7 +65,7 @@ const BookAppointment = () => {
 
   const handleBook = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user || !selectedDoctor) return;
 
     const doctor = doctors.find(d => d.id === selectedDoctor);
@@ -82,7 +81,6 @@ const BookAppointment = () => {
       specialty: doctor.specialty,
       date: selectedDate,
       time: selectedTime,
-      medicalInfoShared: shareMedicalInfo,
     });
 
     // Show success message and redirect
@@ -148,15 +146,14 @@ const BookAppointment = () => {
                   return (
                     <div
                       key={doctor.id}
-                      className={`relative rounded-lg border p-4 flex flex-col space-y-3 transition-colors ${
-                        selectedDoctor === doctor.id 
-                          ? 'border-green-500 ring-2 ring-green-500 bg-green-50' 
+                      className={`relative rounded-lg border p-4 flex flex-col space-y-3 transition-colors ${selectedDoctor === doctor.id
+                          ? 'border-green-500 ring-2 ring-green-500 bg-green-50'
                           : isAway
                             ? 'border-gray-200 bg-gray-50 opacity-75'
                             : 'border-gray-300 hover:border-green-500'
-                      }`}
+                        }`}
                     >
-                      <div 
+                      <div
                         className={`flex items-center space-x-3 ${isAway ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                         onClick={() => !isAway && setSelectedDoctor(doctor.id)}
                       >
@@ -182,7 +179,7 @@ const BookAppointment = () => {
                           <p className="text-sm text-gray-500 truncate">{doctor.specialty}</p>
                         </div>
                       </div>
-                      
+
                       <button
                         type="button"
                         onClick={(e) => {
@@ -238,18 +235,7 @@ const BookAppointment = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center mb-6">
-                  <input
-                    id="share-info"
-                    type="checkbox"
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                    checked={shareMedicalInfo}
-                    onChange={(e) => setShareMedicalInfo(e.target.checked)}
-                  />
-                  <label htmlFor="share-info" className="ml-2 block text-sm text-gray-900">
-                    Share my medical information (Heart Rate, BP, Weight, Glucose) with the doctor
-                  </label>
-                </div>
+
 
                 <div className="flex justify-end">
                   <button
@@ -272,7 +258,7 @@ const BookAppointment = () => {
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm transition-opacity z-10" aria-hidden="true" onClick={() => setViewingDoctor(null)}></div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div className="relative z-20 inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6">
-              
+
               <div className="flex items-start mb-6">
                 <img
                   className={`h-24 w-24 rounded-full bg-gray-300 mr-6 object-cover border-4 border-white shadow-md ${viewingDoctor.status === 'Away' ? 'grayscale' : ''}`}
@@ -372,11 +358,10 @@ const BookAppointment = () => {
                 <button
                   type="button"
                   disabled={viewingDoctor.status === 'Away'}
-                  className={`ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
-                    viewingDoctor.status === 'Away' 
-                      ? 'bg-gray-400 cursor-not-allowed' 
+                  className={`ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${viewingDoctor.status === 'Away'
+                      ? 'bg-gray-400 cursor-not-allowed'
                       : 'bg-green-600 hover:bg-green-700'
-                  }`}
+                    }`}
                   onClick={() => {
                     setSelectedDoctor(viewingDoctor.id);
                     setViewingDoctor(null);

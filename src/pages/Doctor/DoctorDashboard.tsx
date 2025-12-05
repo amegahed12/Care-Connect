@@ -14,7 +14,6 @@ const DoctorDashboard = () => {
 
   const [appointments, setAppointments] = useState<any[]>([]);
   const [isAvailable, setIsAvailable] = useState(true);
-  const [requestSent, setRequestSent] = useState<{ [key: string]: boolean }>({});
   const [selectedPatient, setSelectedPatient] = useState<any | null>(null);
 
   useEffect(() => {
@@ -85,11 +84,7 @@ const DoctorDashboard = () => {
     }
   };
 
-  const handleRequestInfo = (appointment: any) => {
-    // Logic to request info (maybe just update appointment status or similar in future)
-    setRequestSent(prev => ({ ...prev, [appointment.id]: true }));
-    alert('Request sent to patient!');
-  };
+
 
   const handleViewPatient = (patientId: string | number) => {
     console.log('Attempting to view patient with ID:', patientId);
@@ -230,35 +225,15 @@ const DoctorDashboard = () => {
                         </div>
                         <div className="text-xs text-gray-400 mt-1">{appointment.date}</div>
                         <div className="mt-1">
-                          {appointment.medicalInfoShared ? (
-                            <div className="flex flex-col items-end">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 mb-1">
-                                Medical Info Shared
-                              </span>
-                              <button
-                                onClick={() => handleViewPatient(appointment.patientId)}
-                                className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium"
-                              >
-                                <User className="h-3 w-3 mr-1" />
-                                View Record
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="flex flex-col items-end">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 mb-1">
-                                Info Not Shared
-                              </span>
-                              {appointment.status === 'scheduled' && (
-                                <button
-                                  onClick={() => handleRequestInfo(appointment)}
-                                  disabled={requestSent[appointment.id]}
-                                  className={`text-xs text-blue-600 hover:text-blue-800 ${requestSent[appointment.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                >
-                                  {requestSent[appointment.id] ? 'Request Sent' : 'Request Info'}
-                                </button>
-                              )}
-                            </div>
-                          )}
+                          <div className="flex flex-col items-end">
+                            <button
+                              onClick={() => handleViewPatient(appointment.patientId)}
+                              className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium"
+                            >
+                              <User className="h-3 w-3 mr-1" />
+                              View Record
+                            </button>
+                          </div>
                         </div>
                       </div>
 
