@@ -1,5 +1,8 @@
 # 🩺 Care Connect
 
+> [!NOTE]
+> For detailed documentation, please refer to [DOCUMENTATION.md](./DOCUMENTATION.md).
+
 **Care Connect** is a secure, user-friendly telemedicine platform that connects patients and doctors for remote consultations, appointment scheduling, and health record management.  
 The platform reduces the need for physical visits while helping healthcare providers manage their time effectively.
 
